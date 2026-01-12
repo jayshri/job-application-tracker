@@ -51,6 +51,12 @@ export default function ApplicationDetailsPage() {
       <h1 className="mt-4 text-2xl font-bold">
         {application.companyName} — {application.roleTitle}
       </h1>
+      <Link
+            href={`/applications/${id}/edit`}
+            className="mt-4 inline-block rounded-md bg-black px-3 py-2 text-sm text-white"
+            >
+            Edit
+      </Link>
 
       <p className="mt-2 text-sm text-gray-600">
         Status: <span className="font-semibold">{application.status}</span>
