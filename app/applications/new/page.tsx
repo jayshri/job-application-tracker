@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import React from "react";
 import { useState } from "react";
+import { ApplicationStatus } from "../../../lib/types";
 import { useRouter } from "next/navigation";
-import { ApplicationStatus, JobApplication } from "../../../lib/types";
+import { JobApplication } from "../../../lib/types";
 import { loadApplications, saveApplications } from "../../../lib/storage";
 
 const STATUSES: ApplicationStatus[] = [
@@ -24,30 +26,36 @@ export default function NewApplicationPage() {
   const [jobUrl, setJobUrl] = useState("");
   const [notes, setNotes] = useState("");
 
+  const router = useRouter();
+
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    const now = new Date().toISOString();
+        const now = new Date().toISOString();
 
-    const newApp: JobApplication = {
-      id: crypto.randomUUID(),
-      companyName: companyName.trim(),
-      roleTitle: roleTitle.trim(),
-      location: location.trim(),
-      status,
-      jobUrl: jobUrl.trim() || undefined,
-      notes: notes.trim() || undefined,
-      appliedDate: status === "Applied" ? now : undefined,
-      createdAt: now,
-      updatedAt: now,
+        const newApp: JobApplication = {
+            id: crypto.randomUUID(),
+            companyName: companyName.trim(),
+            roleTitle: roleTitle.trim(),
+            location: location.trim(),
+            status,
+            jobUrl: jobUrl.trim() || undefined,
+            notes: notes.trim() || undefined,
+            appliedDate: status === "Applied" ? now : undefined,
+            createdAt: now,
+            updatedAt: now,
+        };
+
+        const current = loadApplications();
+        const next = [newApp, ...current];
+
+        saveApplications(next);
+        if (router?.push) {
+            router.push("/applications");
+        } else {
+            window.location.assign("/applications");
+        }
     };
-
-    const current = loadApplications();
-    const next = [newApp, ...current];
-
-    saveApplications(next);
-    router.push("/applications");
-  };
 
   return (
     <main className="min-h-screen p-6">
