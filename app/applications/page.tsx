@@ -16,7 +16,12 @@ export default function ApplicationsPage() {
     <main className="min-h-screen p-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Applications</h1>
-
+        <Link
+          href="/applications/new"
+          className="rounded-md bg-black px-3 py-2 text-sm text-white"
+        >
+          + New
+        </Link>
         <Link href="/" className="text-sm underline">
           ← Back to dashboard
         </Link>
