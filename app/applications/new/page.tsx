@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ApplicationStatus } from "../../../lib/types";
+import { useRouter } from "next/navigation";
+import { ApplicationStatus, JobApplication } from "../../../lib/types";
+import { loadApplications, saveApplications } from "../../../lib/storage";
 
 const STATUSES: ApplicationStatus[] = [
   "Wishlist",
@@ -25,14 +27,26 @@ export default function NewApplicationPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log({
-      companyName,
-      roleTitle,
-      location,
+    const now = new Date().toISOString();
+
+    const newApp: JobApplication = {
+      id: crypto.randomUUID(),
+      companyName: companyName.trim(),
+      roleTitle: roleTitle.trim(),
+      location: location.trim(),
       status,
-      jobUrl,
-      notes,
-    });
+      jobUrl: jobUrl.trim() || undefined,
+      notes: notes.trim() || undefined,
+      appliedDate: status === "Applied" ? now : undefined,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const current = loadApplications();
+    const next = [newApp, ...current];
+
+    saveApplications(next);
+    router.push("/applications");
   };
 
   return (
