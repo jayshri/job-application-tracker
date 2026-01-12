@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { JobApplication } from "../lib/types";
 import { loadApplications, saveApplications } from "../lib/storage";
+import Link from "next/link";
 
 export default function Home() {
   const [applications, setApplications] = useState<JobApplication[]>([]);
@@ -35,6 +36,9 @@ export default function Home() {
   return (
     <main className="min-h-screen p-6">
       <h1 className="text-2xl font-bold">Job Tracker</h1>
+      <Link href="/applications" className="mt-3 inline-block text-sm underline">
+         View all applications →
+      </Link>
 
       <p className="mt-2 text-sm text-gray-600">
         Total applications: <span className="font-semibold">{applications.length}</span>
