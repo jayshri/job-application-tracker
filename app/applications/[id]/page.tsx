@@ -2,24 +2,40 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { JobApplication } from "../../../lib/types";
-import { loadApplications } from "../../../lib/storage";
+import { loadApplications, saveApplications } from "../../../lib/storage";
 
 export default function ApplicationDetailsPage() {
-  const params = useParams<{ id: string }>();
-  const id = params?.id;
+  const params = useParams<{ id: string }>(); // reads dynamic URL values
+  const id = params?.id; // get application ID from URL
+
+  const router = useRouter();
 
   const [application, setApplication] = useState<JobApplication | null>(null);
-
+  //Loads from LocalStorage when id is available
   useEffect(() => {
     if (!id) return;
 
     const all = loadApplications();
     const found = all.find((a) => a.id === id) || null;
+    //if found, set it to state
     setApplication(found);
   }, [id]);
 
+  const handleDelete = () => {
+    if (!id) return;
+    const ok = window.confirm("Delete this application? This cannot be undone.");
+    if (!ok) return;
+
+    const all = loadApplications();
+    const next = all.filter((a) => a.id !== id);
+
+    saveApplications(next);
+    router.push("/applications");
+};
+
+  // if id is not yet available, show loading state
   if (!id) {
     return (
       <main className="min-h-screen p-6">
@@ -30,7 +46,7 @@ export default function ApplicationDetailsPage() {
       </main>
     );
   }
-
+  // if application is not found, show not found message
   if (!application) {
     return (
       <main className="min-h-screen p-6">
@@ -57,6 +73,12 @@ export default function ApplicationDetailsPage() {
             >
             Edit
       </Link>
+      <button
+        onClick={handleDelete}
+        className="mt-4 ml-3 inline-block rounded-md border px-3 py-2 text-sm"
+        >
+        Delete
+      </button>
 
       <p className="mt-2 text-sm text-gray-600">
         Status: <span className="font-semibold">{application.status}</span>

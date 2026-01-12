@@ -34,11 +34,12 @@ export default function EditApplicationPage() {
   useEffect(() => {
     if (!id) return;
 
+    // get all applications from LocalStorage and find application by ID
     const all = loadApplications();
     const found = all.find((a) => a.id === id) || null;
 
     setApplication(found);
-
+    // if application found then set individual state fields
     if (found) {
       setCompanyName(found.companyName);
       setRoleTitle(found.roleTitle);
@@ -49,6 +50,7 @@ export default function EditApplicationPage() {
     }
   }, [id]);
 
+  // on form submit, update the application in LocalStorage
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!id) return;
