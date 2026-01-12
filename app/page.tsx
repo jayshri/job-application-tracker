@@ -54,12 +54,14 @@ export default function Home() {
       <ul className="mt-6 space-y-2">
         {applications.map((app) => (
           <li key={app.id} className="rounded-md border p-3">
-            <div className="font-semibold">
-              {app.companyName} — {app.roleTitle}
-            </div>
-            <div className="text-sm text-gray-600">
-              {app.status} • {app.location}
-            </div>
+            <Link href={`/applications/${app.id}`} className="block">
+              <div className="font-semibold">
+                {app.companyName} — {app.roleTitle}
+              </div>
+              <div className="text-sm text-gray-600">
+                {app.status} • {app.location}
+              </div>
+            </Link>
           </li>
         ))}
       </ul>

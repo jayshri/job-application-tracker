@@ -50,6 +50,7 @@ export default function NewApplicationPage() {
         const next = [newApp, ...current];
 
         saveApplications(next);
+        // once the new application is saved, navigate back to the applications list
         if (router?.push) {
             router.push("/applications");
         } else {
