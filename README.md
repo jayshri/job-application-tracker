@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Job Application Tracker / Career Dashboard 
 
-## Getting Started
+A Job Application Tracker built using Next.js, TypeScript, and Tailwind CSS.
+This application helps manage job applications, track their status, and visualize progress through a simple dashboard interface.
 
-First, run the development server:
+Live Demo:
 
-```bash
+https://job-application-tracker-alpha-wine.vercel.app/
+
+⸻
+
+Project Overview
+
+	•	Single-page career dashboard for tracking job applications
+	•	Focused on clean UI, predictable state management, and real-world workflows
+	•	Designed to be extended later with authentication and a backend
+
+⸻
+
+Features
+
+	•	Dashboard overview
+	•	Total number of applications
+	•	Breakdown by application status (Applied, Interviewing, Offer)
+	•	Recently updated applications
+	•	Application management (CRUD)
+	•	Create new job applications
+	•	Edit existing applications
+	•	Delete applications with confirmation
+	•	View application details on a dedicated page
+	•	Search, filter, and sort
+	•	Search by company name or role title
+	•	Filter applications by status
+	•	Automatically sort by most recently updated
+	•	Routing
+	•	Dynamic routes for application details and edit pages
+	•	Clean navigation using Next.js App Router
+	•	Data persistence
+	•	Uses browser LocalStorage
+	•	No backend dependency for core functionality
+
+⸻
+
+Tech Stack
+
+	•	Framework: Next.js (App Router)
+	•	Language: TypeScript
+	•	Styling: Tailwind CSS
+	•	State Management: React Hooks
+	•	Routing: Next.js dynamic routing
+	•	Storage: Browser LocalStorage
+	•	Deployment: Vercel
+
+⸻
+
+Getting Started (Local Development)
+
+	•	Install dependencies
+
+npm install
+
+	•	Start development server
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+	•	Open in browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+⸻
 
-To learn more about Next.js, take a look at the following resources:
+Key Technical Highlights
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+	•	Strong use of TypeScript interfaces to define data models
+	•	Separation of concerns using lib/ for types and storage logic
+	•	Immutable update patterns for add, edit, and delete flows
+	•	Derived state for filtering, searching, and sorting
+	•	Client-side routing with programmatic navigation (router.push)
+	•	Dashboard built using computed statistics instead of hardcoded values
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+⸻
 
-## Deploy on Vercel
+Project Structure (High Level)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+	•	app/
+		  page.tsx — Career dashboard
+	•	applications/
+	    page.tsx — Applications list
+	    new/page.tsx — Create application
+	    [id]/page.tsx — Application details
+	    [id]/edit/page.tsx — Edit application
+	 lib/
+	  types.ts — TypeScript models
+	  storage.ts — LocalStorage helpers
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+⸻
+
+Future Enhancements
+
+	•	Replace LocalStorage with a persistent backend (Supabase / Prisma / MongoDB)
+	•	Authentication and user accounts
+	•	Analytics and visualization (charts, funnel metrics)
+	•	Application reminders and follow-up tracking
+	•	Export and import functionality
+	•	Accessibility and dark mode improvements
+
+⸻
+
+Author
+
+	•	Name: Jayshri Aher
+	•	Role: Frontend Developer
+	•	Skills: React, Next.js, TypeScript, Tailwind CSS
