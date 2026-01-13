@@ -76,17 +76,17 @@ export default function Home() {
     saveApplications(next);
   };
 
-  const cardClass = "rounded-lg border p-4";
-  const labelClass = "text-sm text-gray-600";
-  const valueClass = "mt-1 text-2xl font-bold";
+  const cardClass = "rounded-lg border border-slate-200 bg-white p-4";
+  const labelClass = "text-sm text-slate-600";
+  const valueClass = "mt-1 text-2xl font-bold text-slate-900";
 
   return (
-    <main className="min-h-screen p-6">
+    <main className="min-h-screen bg-slate-50 p-6">
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold">Career Dashboard</h1>
-          <p className="mt-1 text-sm text-gray-600">
+          <h1 className="text-2xl font-bold text-slate-900">Career Dashboard</h1>
+          <p className="mt-1 text-sm text-slate-600">
             Track job applications, interviews, and offers.
           </p>
         </div>
@@ -94,14 +94,14 @@ export default function Home() {
         <div className="flex gap-2">
           <Link
             href="/applications"
-            className="rounded-md border px-3 py-2 text-sm"
+            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 hover:bg-slate-100"
           >
             View all
           </Link>
 
           <Link
             href="/applications/new"
-            className="rounded-md bg-black px-3 py-2 text-sm text-white"
+            className="rounded-md bg-emerald-600 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-700"
           >
             + New
           </Link>
@@ -134,14 +134,14 @@ export default function Home() {
       {/* Controls */}
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
         <input
-          className="w-full rounded-md border p-2 sm:max-w-sm"
+          className="w-full rounded-md border border-slate-200 bg-white p-2 text-sm text-slate-800 placeholder-slate-500 focus:border-emerald-500 focus:outline-none sm:max-w-sm"
           placeholder="Search company or role..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
 
         <select
-          className="w-full rounded-md border p-2 sm:max-w-xs"
+          className="w-full rounded-md border border-slate-200 bg-white p-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none sm:max-w-xs"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value as any)}
         >
@@ -155,7 +155,7 @@ export default function Home() {
 
         <button
           onClick={addSample}
-          className="w-full rounded-md bg-black px-4 py-2 text-white sm:w-auto"
+          className="w-full rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 sm:w-auto"
         >
           Add sample
         </button>
@@ -164,20 +164,25 @@ export default function Home() {
       {/* Recently updated (filtered) */}
       <div className="mt-8">
         <div className="flex items-end justify-between">
-          <h2 className="text-lg font-semibold">Recently updated</h2>
-          <p className="text-sm text-gray-600">
+          <h2 className="text-lg font-semibold text-slate-900">
+            Recently updated
+          </h2>
+          <p className="text-sm text-slate-600">
             Showing <span className="font-semibold">{filtered.length}</span>
           </p>
         </div>
 
-        <ul className="mt-3 space-y-2">
+        <ul className="mt-3 space-y-3">
           {filtered.slice(0, 5).map((app) => (
-            <li key={app.id} className="rounded-md border p-3">
+            <li
+              key={app.id}
+              className="rounded-md border border-slate-200 bg-white p-4 hover:shadow-sm"
+            >
               <Link href={`/applications/${app.id}`} className="block">
-                <div className="font-semibold">
+                <div className="font-semibold text-slate-900">
                   {app.companyName} — {app.roleTitle}
                 </div>
-                <div className="text-sm text-gray-600">
+                <div className="mt-1 text-sm text-slate-600">
                   {app.status} • Updated {app.updatedAt.slice(0, 10)}
                 </div>
               </Link>
@@ -186,14 +191,14 @@ export default function Home() {
         </ul>
 
         {applications.length === 0 && (
-          <p className="mt-4 text-sm text-gray-600">
+          <p className="mt-4 text-sm text-slate-600">
             No applications yet. Click <span className="font-medium">+ New</span>{" "}
             to add your first one.
           </p>
         )}
 
         {applications.length > 0 && filtered.length === 0 && (
-          <p className="mt-4 text-sm text-gray-600">
+          <p className="mt-4 text-sm text-slate-600">
             No results match your search/filter.
           </p>
         )}
