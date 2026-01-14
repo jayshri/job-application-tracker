@@ -1,15 +1,16 @@
+// Handler for GET and POST /api/applications
 import { NextResponse } from "next/server";
 import { readApplications, writeApplications } from "../../../lib/server/applicationsStore";
 import { JobApplication } from "../../../lib/types";
 
 export const runtime = "nodejs";
-
+// Handler for GET /api/applications
 export async function GET() {
   const apps = await readApplications();
   // return applications as json response
   return NextResponse.json(apps);
 }
-
+// Handler for POST /api/applications
 export async function POST(req: Request) {
   const body = (await req.json()) as Partial<JobApplication>;
 
