@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { JobApplication, ApplicationStatus } from "../../lib/types";
-import { loadApplications } from "../../lib/storage";
+import { apiGetApplications } from "../../lib/apiClient";
 
 export default function ApplicationsPage() {
   const [applications, setApplications] = useState<JobApplication[]>([]);
@@ -12,7 +12,13 @@ export default function ApplicationsPage() {
     useState<ApplicationStatus | "All">("All");
 
   useEffect(() => {
-    setApplications(loadApplications());
+    // fetch applications from API on component mount
+    apiGetApplications()
+    .then((apps) => setApplications(apps))
+    .catch((err) => {
+      console.error(err);
+      setApplications([]);
+    });
   }, []);
 
   const filtered = applications
