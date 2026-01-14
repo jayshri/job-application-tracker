@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": "ad76dae1-9fda-4240-8f6d-1b1f3ae03e78",
+    "companyName": "Fiserv",
+    "roleTitle": "Web application developer",
+    "location": "Alpharetta,GA",
+    "status": "Recruiter Screen",
+    "jobUrl": "fiserv.com",
+    "notes": "initial stage.",
+    "appliedDate": "2026-01-06T00:00:00.000Z",
+    "createdAt": "2026-01-14T17:42:18.097Z",
+    "updatedAt": "2026-01-14T17:42:18.097Z"
+  },
+  {
+    "id": "648943e1-5e41-478b-8781-af24a6d0afd9",
+    "companyName": "Workday",
+    "roleTitle": "Frontend Engineer",
+    "location": "Alpharetta, GA",
+    "status": "Applied",
+    "createdAt": "2026-01-14T17:35:21.979Z",
+    "updatedAt": "2026-01-14T17:35:21.979Z"
+  }
+]

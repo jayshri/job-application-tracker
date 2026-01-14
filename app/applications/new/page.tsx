@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ApplicationStatus } from "../../../lib/types";
 import { useRouter } from "next/navigation";
 import { JobApplication } from "../../../lib/types";
-import { loadApplications, saveApplications } from "../../../lib/storage";
+import { apiCreateApplication } from "../../../lib/apiClient";
 
 const STATUSES: ApplicationStatus[] = [
   "Wishlist",
@@ -29,33 +29,29 @@ export default function NewApplicationPage() {
 
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const now = new Date().toISOString();
+    try {
+      await apiCreateApplication({
+        companyName: companyName.trim(),
+        roleTitle: roleTitle.trim(),
+        location: location.trim(),
+        status,
+        jobUrl: jobUrl.trim() || undefined,
+        notes: notes.trim() || undefined,
+        appliedDate: appliedDate ? new Date(appliedDate).toISOString() : undefined,
+      });
 
-    const newApp: JobApplication = {
-      id: crypto.randomUUID(),
-      companyName: companyName.trim(),
-      roleTitle: roleTitle.trim(),
-      location: location.trim(),
-      status,
-      jobUrl: jobUrl.trim() || undefined,
-      notes: notes.trim() || undefined,
-      appliedDate: appliedDate ? new Date(appliedDate).toISOString() : undefined,
-      createdAt: now,
-      updatedAt: now,
-    };
-
-    const current = loadApplications();
-    const next = [newApp, ...current];
-
-    saveApplications(next);
-    // once the new application is saved, navigate back to the applications list
-    if (router?.push) {
-      router.push("/applications");
-    } else {
-      window.location.assign("/applications");
+      // once the new application is saved, navigate back to the applications list
+      if (router?.push) {
+        router.push("/applications");
+      } else {
+        window.location.assign("/applications");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Could not save. Please try again.");
     }
   };
 
