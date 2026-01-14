@@ -25,3 +25,14 @@ export async function apiCreateApplication(
 
   return res.json();
 }
+// fetch a single job application by ID via API
+export async function apiGetApplication(id: string): Promise<JobApplication> {
+  const res = await fetch(`/api/applications/${id}`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to load application");
+  return res.json();
+}
+// delete an existing job application via API
+export async function apiDeleteApplication(id: string): Promise<void> {
+  const res = await fetch(`/api/applications/${id}`, { method: "DELETE" });
+  if (!res.ok) throw new Error("Failed to delete application");
+}

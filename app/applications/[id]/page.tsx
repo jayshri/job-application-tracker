@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { JobApplication } from "../../../lib/types";
-import { loadApplications, saveApplications } from "../../../lib/storage";
+import { apiDeleteApplication, apiGetApplication } from "../../../lib/apiClient";
 
 export default function ApplicationDetailsPage() {
   const params = useParams<{ id: string }>(); // reads dynamic URL values
@@ -17,22 +17,26 @@ export default function ApplicationDetailsPage() {
   useEffect(() => {
     if (!id) return;
 
-    const all = loadApplications();
-    const found = all.find((a) => a.id === id) || null;
-    //if found, set it to state
-    setApplication(found);
+    apiGetApplication(id)
+      .then((found) => {
+        //if found, set it to state
+        setApplication(found);
+      })
+      .catch(() => setApplication(null));
   }, [id]);
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (!id) return;
     const ok = window.confirm("Delete this application? This cannot be undone.");
     if (!ok) return;
 
-    const all = loadApplications();
-    const next = all.filter((a) => a.id !== id);
-
-    saveApplications(next);
-    router.push("/applications");
+    try {
+      await apiDeleteApplication(id);
+      router.push("/applications");
+    } catch (err) {
+      console.error(err);
+      alert("Delete failed. Please try again.");
+    }
   };
 
   // if id is not yet available, show loading state
@@ -93,7 +97,9 @@ export default function ApplicationDetailsPage() {
 
             <div>
               <span className="font-medium text-slate-900">Applied Date:</span>{" "}
-              {application.appliedDate ? application.appliedDate.slice(0, 10) : "—"}
+              {application.appliedDate
+                ? application.appliedDate.slice(0, 10)
+                : "—"}
             </div>
 
             <div>

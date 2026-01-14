@@ -1,5 +1,17 @@
 [
   {
+    "id": "267f7915-64d5-4155-9d28-141f649d55bb",
+    "companyName": "Shutterfly",
+    "roleTitle": "software engineer",
+    "location": "redwood city",
+    "status": "Rejected",
+    "jobUrl": "shutterfly.com",
+    "notes": "rejected the offer",
+    "appliedDate": "2025-12-29T00:00:00.000Z",
+    "createdAt": "2026-01-14T17:55:07.661Z",
+    "updatedAt": "2026-01-14T17:55:07.661Z"
+  },
+  {
     "id": "ad76dae1-9fda-4240-8f6d-1b1f3ae03e78",
     "companyName": "Fiserv",
     "roleTitle": "Web application developer",
