@@ -1,15 +1,26 @@
 [
   {
+    "id": "cd63a6d7-c4bc-438a-a64f-765f6cf5a7ee",
+    "companyName": "Workday",
+    "roleTitle": "Frontend Engineer",
+    "location": "Alpharetta, GA",
+    "status": "Applied",
+    "notes": "Sample application (for testing JSON file storage via API).",
+    "appliedDate": "2026-01-14T18:11:08.929Z",
+    "createdAt": "2026-01-14T18:11:08.950Z",
+    "updatedAt": "2026-01-14T18:11:08.950Z"
+  },
+  {
     "id": "267f7915-64d5-4155-9d28-141f649d55bb",
     "companyName": "Shutterfly",
-    "roleTitle": "software engineer",
+    "roleTitle": "software engineering Manager",
     "location": "redwood city",
-    "status": "Rejected",
+    "status": "Offer",
     "jobUrl": "shutterfly.com",
     "notes": "rejected the offer",
     "appliedDate": "2025-12-29T00:00:00.000Z",
     "createdAt": "2026-01-14T17:55:07.661Z",
-    "updatedAt": "2026-01-14T17:55:07.661Z"
+    "updatedAt": "2026-01-14T18:10:43.488Z"
   },
   {
     "id": "ad76dae1-9fda-4240-8f6d-1b1f3ae03e78",
@@ -22,14 +33,5 @@
     "appliedDate": "2026-01-06T00:00:00.000Z",
     "createdAt": "2026-01-14T17:42:18.097Z",
     "updatedAt": "2026-01-14T17:42:18.097Z"
-  },
-  {
-    "id": "648943e1-5e41-478b-8781-af24a6d0afd9",
-    "companyName": "Workday",
-    "roleTitle": "Frontend Engineer",
-    "location": "Alpharetta, GA",
-    "status": "Applied",
-    "createdAt": "2026-01-14T17:35:21.979Z",
-    "updatedAt": "2026-01-14T17:35:21.979Z"
   }
 ]

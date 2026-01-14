@@ -36,3 +36,21 @@ export async function apiDeleteApplication(id: string): Promise<void> {
   const res = await fetch(`/api/applications/${id}`, { method: "DELETE" });
   if (!res.ok) throw new Error("Failed to delete application");
 }
+// update an existing job application via API
+export async function apiUpdateApplication(
+  id: string,
+  updates: Partial<JobApplication>
+): Promise<JobApplication> {
+  const res = await fetch(`/api/applications/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updates),
+  });
+
+  if (!res.ok) {
+    const msg = await res.json().catch(() => ({}));
+    throw new Error(msg?.error || "Failed to update application");
+  }
+
+  return res.json();
+}

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { ApplicationStatus, JobApplication } from "../lib/types";
-import { loadApplications, saveApplications } from "../lib/storage";
+import { apiCreateApplication, apiGetApplications } from "../lib/apiClient";
 
 const STATUSES: ApplicationStatus[] = [
   "Wishlist",
@@ -23,8 +23,12 @@ export default function Home() {
   );
 
   useEffect(() => {
-    const saved = loadApplications();
-    setApplications(saved);
+    apiGetApplications()
+      .then((saved) => setApplications(saved))
+      .catch((err) => {
+        console.error(err);
+        setApplications([]);
+      });
   }, []);
 
   const stats = useMemo(() => {
@@ -56,24 +60,23 @@ export default function Home() {
       .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1));
   }, [applications, search, statusFilter]);
 
-  const addSample = () => {
-    const now = new Date().toISOString();
+  const addSample = async () => {
+    try {
+      await apiCreateApplication({
+        companyName: "Workday",
+        roleTitle: "Frontend Engineer",
+        location: "Alpharetta, GA",
+        status: "Applied",
+        notes: "Sample application (for testing JSON file storage via API).",
+        appliedDate: new Date().toISOString(),
+      });
 
-    const sample: JobApplication = {
-      id: crypto.randomUUID(),
-      companyName: "Workday",
-      roleTitle: "Frontend Engineer",
-      location: "Alpharetta, GA",
-      status: "Applied",
-      createdAt: now,
-      updatedAt: now,
-      appliedDate: now,
-      notes: "Sample application (for testing LocalStorage).",
-    };
-
-    const next = [sample, ...applications];
-    setApplications(next);
-    saveApplications(next);
+      const saved = await apiGetApplications();
+      setApplications(saved);
+    } catch (err) {
+      console.error(err);
+      alert("Could not add sample. Please try again.");
+    }
   };
 
   const cardClass = "rounded-lg border border-slate-200 bg-white p-4";

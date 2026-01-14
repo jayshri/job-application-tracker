@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ApplicationStatus, JobApplication } from "../../../../lib/types";
-import { loadApplications, saveApplications } from "../../../../lib/storage";
+import { apiGetApplication, apiUpdateApplication } from "../../../../lib/apiClient";
 
 const STATUSES: ApplicationStatus[] = [
   "Wishlist",
@@ -36,50 +36,42 @@ export default function EditApplicationPage() {
     if (!id) return;
 
     // get all applications from LocalStorage and find application by ID
-    const all = loadApplications();
-    const found = all.find((a) => a.id === id) || null;
-
-    setApplication(found);
-    // if application found then set individual state fields
-    if (found) {
-      setCompanyName(found.companyName);
-      setRoleTitle(found.roleTitle);
-      setLocation(found.location);
-      setStatus(found.status);
-      setJobUrl(found.jobUrl ?? "");
-      setNotes(found.notes ?? "");
-      setAppliedDate(found.appliedDate ? found.appliedDate.slice(0, 10) : "");
-    }
+    apiGetApplication(id)
+      .then((found) => {
+        setApplication(found);
+        // if application found then set individual state fields
+        setCompanyName(found.companyName);
+        setRoleTitle(found.roleTitle);
+        setLocation(found.location);
+        setStatus(found.status);
+        setJobUrl(found.jobUrl ?? "");
+        setNotes(found.notes ?? "");
+        setAppliedDate(found.appliedDate ? found.appliedDate.slice(0, 10) : "");
+      })
+      .catch(() => setApplication(null));
   }, [id]);
 
   // on form submit, update the application in LocalStorage
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!id) return;
 
-    const all = loadApplications();
-    const now = new Date().toISOString();
-
-    const next = all.map((a) => {
-      if (a.id !== id) return a;
-
-      return {
-        ...a,
+    try {
+      await apiUpdateApplication(id, {
         companyName: companyName.trim(),
         roleTitle: roleTitle.trim(),
         location: location.trim(),
         status,
         jobUrl: jobUrl.trim() || undefined,
         notes: notes.trim() || undefined,
-        appliedDate: appliedDate
-          ? new Date(appliedDate).toISOString()
-          : undefined,
-        updatedAt: now,
-      };
-    });
+        appliedDate: appliedDate ? new Date(appliedDate).toISOString() : undefined,
+      });
 
-    saveApplications(next);
-    router.push(`/applications/${id}`);
+      router.push(`/applications/${id}`);
+    } catch (err) {
+      console.error(err);
+      alert("Save failed. Please try again.");
+    }
   };
 
   if (!id) {
@@ -104,9 +96,7 @@ export default function EditApplicationPage() {
   return (
     <main className="min-h-screen bg-slate-50 p-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">
-          Edit Application
-        </h1>
+        <h1 className="text-2xl font-bold text-slate-900">Edit Application</h1>
 
         <Link
           href={`/applications/${id}`}
@@ -163,9 +153,7 @@ export default function EditApplicationPage() {
             <select
               className="mt-1 w-full rounded-md border border-slate-200 bg-white p-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none"
               value={status}
-              onChange={(e) =>
-                setStatus(e.target.value as ApplicationStatus)
-              }
+              onChange={(e) => setStatus(e.target.value as ApplicationStatus)}
             >
               {STATUSES.map((s) => (
                 <option key={s} value={s}>
