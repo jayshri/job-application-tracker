@@ -1,9 +1,6 @@
 // Handler for GET, PUT, DELETE /api/applications/[id]
 import { NextResponse } from "next/server";
-import {
-  readApplications,
-  writeApplications,
-} from "../../../../lib/server/applicationsStore";
+import { readApplications, writeApplications } from "../../../../lib/server/kvStorage";
 import { JobApplication } from "../../../../lib/types";
 
 export const runtime = "nodejs";

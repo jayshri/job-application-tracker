@@ -1,14 +1,21 @@
 // Handler for GET and POST /api/applications
 import { NextResponse } from "next/server";
-import { readApplications, writeApplications } from "../../../lib/server/applicationsStore";
+import { readApplications, writeApplications } from "../../../lib/server/kvStorage";
 import { JobApplication } from "../../../lib/types";
 
 export const runtime = "nodejs";
 // Handler for GET /api/applications
 export async function GET() {
-  const apps = await readApplications();
-  // return applications as json response
-  return NextResponse.json(apps);
+  try {
+    const apps = await readApplications();
+    return NextResponse.json(apps);
+  } catch (err: any) {
+    console.error("GET /api/applications failed:", err?.message || err, err);
+    return NextResponse.json(
+      { error: err?.message || "KV error" },
+      { status: 500 }
+    );
+  }
 }
 // Handler for POST /api/applications
 export async function POST(req: Request) {

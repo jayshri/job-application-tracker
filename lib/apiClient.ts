@@ -2,9 +2,16 @@
 import { JobApplication } from "./types";
 
 // fetch all job applications via API
+// lib/apiClient.ts
 export async function apiGetApplications(): Promise<JobApplication[]> {
   const res = await fetch("/api/applications", { cache: "no-store" });
-  if (!res.ok) throw new Error("Failed to load applications");
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    console.error("GET /api/applications failed:", res.status, text);
+    throw new Error("Failed to load applications");
+  }
+
   return res.json();
 }
 // create a new job application via API
