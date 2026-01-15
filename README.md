@@ -1,43 +1,58 @@
-Job Application Tracker / Career Dashboard 
+Job Application Tracker / Career Dashboard
 
-A Job Application Tracker built using Next.js, TypeScript, and Tailwind CSS.
-This application helps manage job applications, track their status, and visualize progress through a simple dashboard interface.
+A full-stack Job Application Tracker built using Next.js, TypeScript, Tailwind CSS, and Node.js API routes, with Vercel KV (Redis) for persistent storage.
 
-Live Demo:
+This application helps manage job applications, track their status, and visualize progress through a clean, intuitive dashboard.
 
+Live Demo
 https://job-application-tracker-alpha-wine.vercel.app/
 
 ⸻
 
 Project Overview
 
-	•	Single-page career dashboard for tracking job applications
-	•	Focused on clean UI, predictable state management, and real-world workflows
-	•	Designed to be extended later with authentication and a backend
+	•	Full-stack career dashboard for tracking job applications
+	•	Clean, professional UI with a consistent design system
+	•	Real-world CRUD workflows backed by server APIs
+	•	Deployed on Vercel with a managed KV database
+	•	Designed to be easily extended with authentication and multi-user support
 
 ⸻
 
 Features
 
-	•	Dashboard overview
+Dashboard
+
 	•	Total number of applications
-	•	Breakdown by application status (Applied, Interviewing, Offer)
+	•	Status breakdown (Applied, Interviewing, Offer, etc.)
 	•	Recently updated applications
-	•	Application management (CRUD)
+	•	Real-time data loaded from server APIs
+
+Application Management (CRUD)
+
 	•	Create new job applications
 	•	Edit existing applications
 	•	Delete applications with confirmation
 	•	View application details on a dedicated page
-	•	Search, filter, and sort
+
+Search, Filter, and Sort
+
 	•	Search by company name or role title
 	•	Filter applications by status
 	•	Automatically sort by most recently updated
-	•	Routing
+
+Routing & Navigation
+
 	•	Dynamic routes for application details and edit pages
 	•	Clean navigation using Next.js App Router
-	•	Data persistence
-	•	Uses browser LocalStorage
-	•	No backend dependency for core functionality
+	•	Programmatic navigation using router.push
+
+Backend & Data Persistence
+
+	•	Node.js API routes for data access
+	•	Server-side validation for required fields
+	•	Persistent storage using Vercel KV (Redis)
+	•	No client-side LocalStorage dependency in production
 
 ⸻
 
@@ -46,69 +61,62 @@ Tech Stack
 	•	Framework: Next.js (App Router)
 	•	Language: TypeScript
 	•	Styling: Tailwind CSS
-	•	State Management: React Hooks
-	•	Routing: Next.js dynamic routing
-	•	Storage: Browser LocalStorage
+	•	Frontend: React Hooks
+	•	Backend: Node.js API routes
+	•	Database: Vercel KV (Redis via REST API)
 	•	Deployment: Vercel
 
 ⸻
 
 Getting Started (Local Development)
 
-	•	Install dependencies
+Install dependencies
 
-npm install
+	npm install
 
-	•	Start development server
+Set up environment variables
 
-npm run dev
+Create a .env.local file and add:
 
-	•	Open in browser
+	KV_REST_API_URL=your_kv_rest_url
+	KV_REST_API_TOKEN=your_kv_rest_token
 
-http://localhost:3000
+Start development server
 
+	npm run dev
+
+Open in browser
+
+	http://localhost:3000
 
 ⸻
 
 Key Technical Highlights
 
-	•	Strong use of TypeScript interfaces to define data models
-	•	Separation of concerns using lib/ for types and storage logic
-	•	Immutable update patterns for add, edit, and delete flows
+	•	Clear separation between client UI and server data access
+	•	Type-safe data models using shared TypeScript interfaces
+	•	Node.js API routes for scalable backend logic
+	•	Persistent server-side storage using Redis (KV)
+	•	Immutable update patterns for create, edit, and delete flows
 	•	Derived state for filtering, searching, and sorting
-	•	Client-side routing with programmatic navigation (router.push)
-	•	Dashboard built using computed statistics instead of hardcoded values
-
-⸻
-
-Project Structure (High Level)
-
-	•	app/
-		  page.tsx — Career dashboard
-	•	applications/
-	    page.tsx — Applications list
-	    new/page.tsx — Create application
-	    [id]/page.tsx — Application details
-	    [id]/edit/page.tsx — Edit application
-	 lib/
-	  types.ts — TypeScript models
-	  storage.ts — LocalStorage helpers
+	•	Production-ready deployment on Vercel
 
 ⸻
 
 Future Enhancements
 
-	•	Replace LocalStorage with a persistent backend (Supabase / Prisma / MongoDB)
 	•	Authentication and user accounts
-	•	Analytics and visualization (charts, funnel metrics)
+	•	Multi-user support with per-user data isolation
+	•	Analytics and visualizations (charts, pipeline metrics)
 	•	Application reminders and follow-up tracking
-	•	Export and import functionality
-	•	Accessibility and dark mode improvements
+	•	Export/import functionality
+	•	Accessibility improvements and dark mode
 
 ⸻
 
 Author
 
-	•	Name: Jayshri Aher
-	•	Role: Frontend Developer
-	•	Skills: React, Next.js, TypeScript, Tailwind CSS
+	•	Jayshri Aher
+	•	Software Engineer
+	•	Skills: React, Next.js, TypeScript, Tailwind CSS, Node.js, REST APIs
+
